@@ -1,0 +1,51 @@
+
+.section1{
+    display: flex;
+}
+.image_container{
+    width: 11rem;
+    
+    margin-top: 2.5rem;
+    margin-left: 6rem;
+    height: 10rem;
+    box-shadow: -1px -1px 10px 2px #ccc;
+    border-radius: 50%;
+}
+.details_container{
+    
+   /*  border: 1px solid */
+}
+
+tr:nth-child(even) {
+    background-color: unset;
+}
+.name{
+    width: 20%;
+}
+
+.details_container{
+    margin:2rem;
+  
+    width: 60%;
+    margin-left:8%;
+    border-radius: 5px;
+    box-shadow: -2px -2px 8px 1px #ccc;
+}
+.table_header {
+    display:flex;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.section2{
+    width: 90%;
+    margin-left: 5%;
+    box-shadow: -1px -1px 10px 1px #ccc;
+    border-radius: 5px;
+}
+
+.section2 div{
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+}
