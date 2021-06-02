@@ -23,7 +23,7 @@ const ResetUser = () => {
         }
         console.log("calling api")
         try {
-            const response = await fetch(`http://localhost:5000/api/users/reset-password`,{
+            const response = await fetch(`/api/users/reset-password`,{
             method:'POST',
             headers:{
                 Accept:'application/json',
@@ -47,8 +47,7 @@ const ResetUser = () => {
         } catch (error) {
             console.log("error in catch",error)
         }
-        
-       
+
     }
 
     return (
