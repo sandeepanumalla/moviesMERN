@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 const path = require("path");
 const cors = require('cors')
+
+require('dotenv').config();
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -12,7 +14,7 @@ app.use(function (req, res, next) {
 })
 
 const mongoose = require("mongoose"); 
-mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
