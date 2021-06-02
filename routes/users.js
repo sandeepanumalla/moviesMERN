@@ -97,7 +97,7 @@ router.post("/reset-password",async (req,res)=>{
                 }
                 const token = jwt.sign(payload,secret,{expiresIn:'15m'});
                 
-                const resetLink = `http://localhost:${process.env.PORT}/change-password/${document._id}/${token}`
+                const resetLink = `https://yosank.herokuapp.com/change-password/${document._id}/${token}`
                   // send mail with defined transport object
                   let info =  transporter.sendMail({
                     from: `${process.env.GMAIL}`, // sender address
