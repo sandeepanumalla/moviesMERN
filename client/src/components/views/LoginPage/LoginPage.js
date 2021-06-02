@@ -124,7 +124,7 @@ function LoginPage(props) {
 
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe}  >Remember me</Checkbox>
-                <a className="login-form-forgot" href="/reset_user" style={{ float: 'right', color: '' }}>
+                <a className="login-form-forgot" href="/forgot-password" style={{ float: 'right', color: '' }}>
                   forgot password
                   </a>
                 <div>

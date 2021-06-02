@@ -28,10 +28,10 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
-          <a href="/login">Sign In</a>
+          <a href="/login" style={{textDecoration:'none'}}>Sign In</a>
         </Menu.Item>
         <Menu.Item key="app">
-          <a href="/register">Register</a>
+          <a href="/register" style={{textDecoration:'none'}}>Register</a>
         </Menu.Item>
       </Menu>
     )
@@ -39,10 +39,10 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
+          <a onClick={logoutHandler} style={{textDecoration:'none'}}>Logout</a>
         </Menu.Item>
         <Menu.Item key="profile">
-          <a onClick={profileHandler}>profile</a>
+          <a onClick={profileHandler} style={{textDecoration:'none'}}>Profile</a>
         </Menu.Item>
       </Menu>
     )

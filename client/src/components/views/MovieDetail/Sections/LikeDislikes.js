@@ -13,7 +13,8 @@ function LikeDislikes(props) {
     const [Dislikes, setDislikes] = useState(0)
     const [LikeAction, setLikeAction] = useState(null);
     const [showAlert,setShowAlert] = useState(false);
-    const [DislikeAction, setDislikeAction] = useState(null)
+    const [DislikeAction, setDislikeAction] = useState(null);
+
     let variable = {};
 
     if (props.movie) {
@@ -21,47 +22,41 @@ function LikeDislikes(props) {
     } else {
         variable = { commentId: props.commentId, userId: props.userId }
     }
-
-
+   const getLikes = async ()=>{
+       const response = await fetch(`http://localhost:5000/api/movieLikes/getMovieLikes/${props.movieId}`,{
+           method:"GET",
+           headers:{
+            Accept:'application/json',
+            'Content-Type':'application/json'
+        },
+       
+       })
+       const data = await response.json()
+       console.log("likes data",data)
+       if(response.status == 200){
+           setLikes(data);
+       }
+   }
+   const getDislikes = async ()=>{
+       
+    const response = await fetch(`http://localhost:5000/api/movieDisLikes/getMovieDislikes/${props.movieId}`,{
+        method:"GET",
+        headers:{
+         Accept:'application/json',
+         'Content-Type':'application/json'
+     },
+    
+    })
+    const data = await response.json()
+    if(response.status == 200){
+        setLikes(data);
+    }
+}
 
     useEffect(() => {
 
-        Axios.post('/api/like/getLikes', variable)
-            .then(response => {
-                console.log('getLikes', response.data)
-
-                if (response.data.success) {
-                    // n of comment likes 
-                    setLikes(response.data.likes.length)
-
-                    // if already clicked 
-                    response.data.likes.map(like => {
-                        if (like.userId === props.userId) {
-                            setLikeAction('liked')
-                        }
-                    })
-                } else {
-                    alert('Failed to get likes')
-                }
-            })
-
-        Axios.post('/api/like/getDislikes', variable)
-            .then(response => {
-                console.log('getDislike', response.data)
-                if (response.data.success) {
-                    // n of comment likes 
-                    setDislikes(response.data.dislikes.length)
-
-                    // if already clicked 
-                    response.data.dislikes.map(dislike => {
-                        if (dislike.userId === props.userId) {
-                            setDislikeAction('disliked')
-                        }
-                    })
-                } else {
-                    alert('Failed to get dislikes')
-                }
-            })
+       getLikes();
+       getDislikes();
 
     }, [])
 
@@ -76,14 +71,12 @@ function LikeDislikes(props) {
 
         if (LikeAction === null) {
 
-            Axios.post('/api/like/upLike', variable)
+            Axios.post(`http://localhost:5000/api/movieLikes/addmovieLikes/${props.userId}/${props.movieId}`)
                 .then(response => {
-                    if (response.data.success) {
+                    if (response.status == 200) {
 
                         setLikes(Likes + 1)
                         setLikeAction('liked')
-
-                        //If dislike button is already clicked
 
                         if (DislikeAction !== null) {
                             setDislikeAction(null)
@@ -167,7 +160,7 @@ function LikeDislikes(props) {
                         theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
                         onClick={onLike} />
                 </Tooltip>
-                <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Likes}</span>
+                <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Likes.length}</span>
             </span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span key="comment-basic-dislike">
                 <Tooltip title="Dislike">
@@ -177,7 +170,7 @@ function LikeDislikes(props) {
                         onClick={onDislike}
                     />
                 </Tooltip>
-                <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Dislikes}</span>
+                <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Dislikes.length}</span>
             </span>
                
 

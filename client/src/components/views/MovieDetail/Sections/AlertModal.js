@@ -18,12 +18,29 @@ const AlertModal = (props) => {
          
          <div className='modal_header'>
          <div className='modal_title' >
-         <h2>Please Login First</h2>
-         </div>
-       
-             <p>In order to save your details you need to login</p>
+         {
+             props.type == `change-password`&& props.isSuccess ?
+             
+             <h4>Your password has been changed successfully!</h4>: 
+            
+             
+             <h2>Please Login First</h2>
+             
+      
+         }
+        
+             
+             </div>
+       {
+           ! props.type && !props.isSuccess &&  
+           <p>In order to save your details you need to login</p>
+       }
+             
+             
 
         </div>
+         
+         
          <div onClick={()=>{handleClick()}} className="btn_class"><button className="btn_login">Login</button></div>
          </div>
          </React.Fragment>

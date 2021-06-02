@@ -82,7 +82,7 @@ function Favorite(props) {
     return (
         <React.Fragment>
          <React.Fragment>
-            <Button onClick={onClickFavorite} > {!Favorited ? "Add to Favorites" : "Remove from favorites"} {FavoriteNumber}</Button>
+            <Button onClick={onClickFavorite} > {!Favorited ? "Add to Favorites" : "Remove from favorites"} {/*FavoriteNumber*/}</Button>
             </React.Fragment>
             <React.Fragment>
             <div class="parent">

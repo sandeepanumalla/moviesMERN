@@ -1,16 +1,19 @@
 const express = require('express');
 const { MovieDislikes } = require('../models/MovieDislikes');
-const {MovieLikes} = require('../models/MovieLikes')
+const { MovieLikes } = require('../models/MovieLikes');
+
 
 const router = express.Router();
 
 
-router.get('/getMovieLikes/:movieId',async (req,res)=>{
+router.get('/getMovieDislikes/:movieId',async (req,res)=>{
     try {
-        MovieLikes.find({movieId:req.params.movieId}).exec((err,result)=>{
+        MovieDislikes.find({movieId:req.params.movieId}).exec((err,result)=>{
+            // console.log(result.length);
             if(err || !result || result.length == 0){
-                return res.status(400).json("No users have liked this movie ")
-            }
+                return res.status(400).json("No users have disliked this movie ")
+            } 
+            
             return res.status(200).json(result)
         })   
     } catch (err) {
@@ -22,7 +25,7 @@ router.get('/getMovieLikes/:movieId',async (req,res)=>{
 const duplicateChecker = async(req,res,next)=>{
     try{
         console.log("checking",req.params.userId)
-        MovieLikes.findOne({userId: req.params.userId,
+        MovieDislikes.findOne({userId: req.params.userId,
             movieId: req.params.movieId})
             .exec((err,success)=>{
                 if(err || !success){
@@ -30,38 +33,38 @@ const duplicateChecker = async(req,res,next)=>{
                 }
                 else{
                     console.log(success);
-                    return res.status(400).json("This user has already liked this movie");
+                    return res.status(400).json("This user has already disliked this movie");
                 }
             })
     }
     catch(err){
         return res.status(400).json("Error in catch, ",err);
     }
-}
+} 
 
-const ifDisLiked=(req,res,next)=>{
+const ifLiked=(req,res,next)=>{
     const obj = {userId: req.params.userId,
         movieId: req.params.movieId}
-        MovieDislikes.findOne(obj).exec((err,success)=>{
+    MovieLikes.findOne(obj).exec((err,success)=>{
             if(success){
-                MovieDislikes.findOneAndDelete(obj).exec((err,success)=>{
+                MovieLikes.findOneAndDelete(obj).exec((err,success)=>{
                     if(err || !success){
                         return res.status(400).json("error in disliking movie")
                     }
                     return next()
                 })
-                 
+
             }
-            else{
+            else{ 
                 return next();
             }
         })
 }
 
-router.post('/addmovieLikes/:userId/:movieId',duplicateChecker,ifDisLiked,async(req,res)=>{
+
+router.post('/addMovieDislikes/:userId/:movieId',duplicateChecker,ifLiked,async(req,res)=>{
     try {
-        
-                const likes = new MovieLikes({
+                const likes = new MovieDislikes({
                     userId: req.params.userId,
                     movieId: req.params.movieId
                 })
@@ -69,34 +72,35 @@ router.post('/addmovieLikes/:userId/:movieId',duplicateChecker,ifDisLiked,async(
                 likes.save((err,success)=>{
                     if(err || !success){
                         console.log(":err",err);
-                        return res.status(400).json("error saving the likes")
+                        return res.status(400).json("error saving the dislikes")
                     }
                     return res.status(200).json(success);
                 })
 
     } catch (err) {
-        return res.status(400).json("error in catch!! failed adding liked to movie " ,err);
+        return res.status(400).json("error in catch!! " ,err);
     }
 })
 
-router.delete("/unLikeMovie/:userId/:movieId",async(req,res)=>{
+
+router.delete("/unDisLikeMovie/:userId/:movieId",async(req,res)=>{
     try{
         const obj = {userId: req.params.userId,
             movieId: req.params.movieId}
-        MovieLikes.findOneAndDelete(obj).exec((err,success)=>{
+        MovieDislikes.findOneAndDelete(obj).exec((err,success)=>{
             if(err || !success){
                 console.log("err in deleting",err);
-                return res.status(400).json("unable to unlike the movie")
+                return res.status(400).json("unable to un dislike the movie")
             }
-            return res.status(200).json("movie unliked successfully!");
+            return res.status(200).json("movie un disliked successfully!");
         })
     }
     catch(err){
-        return res.status(400).json("error in catch failed unliking movie !! " ,err);
+        return res.status(400).json("error in catch failed un disliking movie !! " ,err);
     }
 })
 
-// router.post() 
+// router.post()
 
 
 module.exports = router;

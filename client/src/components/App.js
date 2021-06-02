@@ -10,6 +10,8 @@ import Footer from "./views/Footer/Footer"
 import MovieDetail from "./views/MovieDetail/MovieDetail"
 import FavoritePage from "./views/FavoritePage/FavoritePage"
 import Profile from './views/profilePage/Profile';
+import ResetUser from './views/LoginPage/ResetUser';
+import ChangePassword from './views/LoginPage/ChangePassword';
 
  
 function App(props) {
@@ -26,6 +28,8 @@ console.log(props)
               <Route exact path="/movie/:movieId" component={Auth(MovieDetail, null)} />
               <Route exact path="/favorite" component={Auth(FavoritePage, null)} />
               <Route exact path="/profile" component={Auth(Profile, null)} />
+              <Route exact path="/forgot-password" component={Auth(ResetUser, false)} />
+              <Route exact path="/change-password/:userId/:token" component={Auth(ChangePassword, false)} />
             </Switch>
           </div>
         <Footer />
