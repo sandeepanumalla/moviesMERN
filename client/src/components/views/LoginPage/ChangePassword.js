@@ -22,7 +22,7 @@ function ChangePassword(props) {
     console.log("ConfirmPassword= " + confirmPassword);
 
     const verifyToken = async() =>{
-        const link = `http://localhost:5000/api/users/reset-password/${props.match.params.userId}/${props.match.params.token}`;
+        const link = `/api/users/reset-password/${props.match.params.userId}/${props.match.params.token}`;
 
         console.log("this.props",props,link);
         try {
@@ -43,7 +43,7 @@ function ChangePassword(props) {
     }
 
     const resetHandler = async()=>{
-        const link = `http://localhost:5000/api/users/reset-password1/${props.match.params.userId}/${props.match.params.token}`
+        const link = `/api/users/reset-password1/${props.match.params.userId}/${props.match.params.token}`
         const obj = {
             password:newPassword,
             confirmPassword: confirmPassword
